@@ -34,6 +34,10 @@ async function load() {
     }
   });
   const data = await res.json();
+  if (data.error) {
+    document.body.innerHTML = `<h2>🔒 Please login with authorized Google account</h2>`;
+    return;
+  }
   urls = data;
   render();
 }
