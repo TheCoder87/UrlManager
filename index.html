@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>URL Manager</title>
+  <style>
+    body {
+      font-family: Arial;
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
+    }
+    input, button {
+      padding: 10px;
+      margin: 5px 0;
+    }
+    .link {
+      display: flex;
+      justify-content: space-between;
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+
+<h2>🔗 URL Manager</h2>
+
+<input type="text" id="urlInput" placeholder="Enter URL">
+<button onclick="addUrl()">Add</button>
+
+<div id="list"></div>
+
+<script>
+  let urls = JSON.parse(localStorage.getItem("urls")) || [];
+
+  function save() {
+    localStorage.setItem("urls", JSON.stringify(urls));
+    render();
+  }
+
+  function addUrl() {
+    const input = document.getElementById("urlInput");
+    if (input.value) {
+      urls.push(input.value);
+      input.value = "";
+      save();
+    }
+  }
+
+  function deleteUrl(index) {
+    urls.splice(index, 1);
+    save();
+  }
+
+  function render() {
+    const list = document.getElementById("list");
+    list.innerHTML = "";
+
+    urls.forEach((url, i) => {
+      const div = document.createElement("div");
+      div.className = "link";
+
+      div.innerHTML = `
+        <a href="${url}" target="_blank">${url}</a>
+        <button onclick="deleteUrl(${i})">❌</button>
+      `;
+
+      list.appendChild(div);
+    });
+  }
+
+  render();
+</script>
+
+</body>
+</html>
