@@ -43,13 +43,16 @@ async function add() {
   const tags = document.getElementById("tags").value.split(",");
 
   await fetch(API, {
-    method: "POST",
-    body: JSON.stringify({
-      action: "add",
-      url,
-      tags
-    })
-  });
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    action: "add",
+    url,
+    tags
+  })
+});
 
   load();
 }
