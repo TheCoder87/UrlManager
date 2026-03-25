@@ -27,16 +27,13 @@ const API = "https://script.google.com/macros/s/AKfycbzJcW2Hq3W6nYGabMpKIZ2UnRDF
 let urls = [];
 
 async function load() {
-  const res = await fetch(API);
+  const res = await fetch(API, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  });
   const data = await res.json();
-
-  if (data.error) {
-    document.body.innerHTML = `
-      <h2>🔒 Please login with authorized Google account</h2>
-    `;
-    return;
-  }
-
   urls = data;
   render();
 }
